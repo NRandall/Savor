@@ -4,6 +4,7 @@ angular
     'savor.review',
     'savor.profile',
     'savor.user',
+    'savor.home',
     'auth0', 
     'angular-storage', 
     'angular-jwt',
@@ -41,7 +42,9 @@ angular
       controller: 'reviewController',
     })
     .state('/', {
-      url: '/'
+      url: '/',
+      templateUrl: '/views/components/home/home.tpl.html',
+      controller: 'homeController'
     });
     
     jwtInterceptorProvider.tokenGetter = function(store) {
@@ -68,7 +71,7 @@ angular
     }
     $provide.factory('redirect', redirect);
     $httpProvider.interceptors.push('jwtInterceptor');
-    $httpProvider.interceptors.push('redirect');
+    //$httpProvider.interceptors.push('redirect');
   })
     
     // The callback in $locationChangeStart gets evaluated 
