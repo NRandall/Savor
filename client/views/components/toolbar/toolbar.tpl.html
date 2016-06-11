@@ -1,55 +1,52 @@
-<!-- My CSS -->
-<link rel="stylesheet" href="./styles.css">
+
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<body>
-
+<div class="toolbar">
   <md-toolbar>
-  <div class="md-toolbar-tools themer">
-    <img 
-      class= "logo" 
-      ui-sref="/"
-      src="/views/components/toolbar/SAVOR4XWHITEXBLACK.png"
-      ng-click="toolbar.goHome()"
-    >
-    <span flex></span>
-    
-    <!-- LOGIN BUTTON -->
-    <md-button
-      aria-label="Login"
-      ui-sref="toolbar"
-      ng-if="!toolbar.auth.isAuthenticated"
-      ng-click="toolbar.login()">
-      Login
-    </md-button>
+    <div class="md-toolbar-tools themer">
+      <img 
+        class= "logo" 
+        ui-sref="/"
+        src="/views/components/toolbar/SAVOR4XWHITEXBLACK2.png"
+        ng-click="toolbar.goHome()"
+      >
+      <span flex></span>
+      
+      <!-- LOGIN BUTTON -->
+      <md-button
+        aria-label="Login"
+        ui-sref="toolbar"
+        ng-if="!toolbar.auth.isAuthenticated"
+        ng-click="toolbar.login()">
+        Login
+      </md-button>
 
-    <!-- PENCIL WRITE REVIEW BUTTON -->
-    <md-button
-      aria-label="Write Review"
-      style="float:right" 
-      ng-click="openReview()"
-      ng-if="toolbar.auth.isAuthenticated"
-      <i class="material-icons" class="name">mode_edit</i></md-icon>
-    </md-button>
+      <!-- PENCIL WRITE REVIEW BUTTON -->
+      <md-button
+        aria-label="Write Review"
+        style="float:right" 
+        ng-click="openReview()"
+        ng-if="toolbar.auth.isAuthenticated"
+        <i class="material-icons" class="name">mode_edit</i></md-icon>
+      </md-button>
 
-    <md-button
-      aria-label="User"
-      style="float:right" 
-      ui-sref="user"
-      ng-if="toolbar.auth.isAuthenticated"
-      <i class="material-icons">person</i>
-    </md-button>
+      <md-button
+        aria-label="User"
+        style="float:right" 
+        ui-sref="user"
+        ng-if="toolbar.auth.isAuthenticated"
+        <i class="material-icons">person</i>
+      </md-button>
 
-    <!-- LOGOUT BUTTON -->
-    <md-button
-      aria-label="Logout"
-      ui-sref="toolbar"
-      ng-if="toolbar.auth.isAuthenticated"
-      ng-click="toolbar.logout()">
-      Logout
-    </md-button>
-   
-  </div>
+      <!-- LOGOUT BUTTON -->
+      <md-button
+        aria-label="Logout"
+        ui-sref="toolbar"
+        ng-if="toolbar.auth.isAuthenticated"
+        ng-click="toolbar.logout()">
+        Logout
+      </md-button>     
+    </div>
   </md-toolbar>
-</body>
+</div>
