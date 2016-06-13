@@ -32,16 +32,9 @@ angular
       $http.get('/api/restaurants').then(function(res) {
         $scope.restaurants = res.data;
         $scope.restaurants.forEach(function(it, i){
-          it.span  = { row : 1, col : 1 };
-          if (i === 0 || i === 5 || i === 6 || i === 12) it.span.row = it.span.col = 2;
-          switch(Math.floor(Math.random()*3)) {
-            case 0: it.background = "red lg" + it.span.col; break;
-            case 1: it.background = "green lg" + it.span.col; break;
-            case 2: it.background = "darkBlue lg" + it.span.col; break;
-          }
-
+          it.span  = { row : 1, col : 2 };
+          //if (i === 0 || i === 4 || i === 6 || i === 12) it.span.row = it.span.col = 2;
         });
-        console.log($scope.restaurants);
       });
     }
     // Make sure to wait till Google Maps SDK is fully ready

@@ -7,98 +7,93 @@
     <section class="col-md-4" layout="row" layout-sm="column" layout-align="center" layout-wrap >
 
       <!-- SEARCH -->
-      <md-input-container class="md-icon-float md-block" flex>
-        <md-icon><i class="material-icons" class="name"></i>search</md-icon>
+      <md-input-container class="md-icon-float md-block lgSearch" flex>
+        <md-icon><i class="material-icons"></i>search</md-icon>
         <input ng-model="searchRestaurant" type="text" placeholder="Search">
       </md-input-container>
     </section>
     
     <div class="gridListdemoDynamicTiles">
-      <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="2" md-cols-gt-md="3" md-row-height-gt-md="400px" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
+      <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="500px" md-row-height="500px" md-gutter="8px" md-gutter-gt-sm="4px">
 
-        <md-grid-tile ng-repeat="restaurant in restaurants | filter:searchRestaurant" md-rowspan="{{restaurant.span.row}}" md-colspan="{{restaurant.span.col}}" md-colspan-sm="1" md-colspan-xs="1" ng-class="restaurant.background">
-          <md-grid-tile-header><h3>{{restaurant.restaurantName}}</h3></md-grid-tile-header>
-          
+        <md-grid-tile ng-repeat="restaurant in restaurants | filter:searchRestaurant" md-rowspan="{{restaurant.span.row}}" md-colspan="{{restaurant.span.col}}" md-colspan-sm="1" md-colspan-xs="1" class="white">
+          <md-grid-tile-header class="lgName"><h2 >{{restaurant.restaurantName}}</h2></md-grid-tile-header>
 
-          <div class="lgRevCont">
-            <div class="lgImg">
-              <img id="revPhoto" ng-src={{restaurant.image}} alt="">
+          <div class="lgRevCont" layout="column" layout-fill>
+
+          <div flex="45" class="lgImg">
+              <span class="helper"></span><img id="revPhoto" ng-src="{{restaurant.image}}" alt="">
             </div>
-            <div class="lgMap">
-            <ui-gmap-google-map center='map.center' zoom='11'>
-              <!-- Add label on it! -->
-              <ui-gmap-marker
-              idKey='1'
-              coords='map.center'
-              options='options'
-              >
-              </ui-gmap-marker>
-            </ui-gmap-google-map>
+            
+            <div flex="55" class= lgLower layout="row">
+              <div flex="50" class="lgRev" >
+                <p>{{restaurant.restaurantReview}}</p>
+                <hr>
+                <div class="lgRating">
+
+                  <p>Food: {{restaurant.foodRating}}<br />
+                   Service: {{restaurant.serviceRating}}<br />
+                   Ambience: {{restaurant.ambienceRating}}<br />
+                   Price per: {{'$' + restaurant.priceRating}}<br />
+                   Yelp Rating: <img ng-if="restaurant.yelp" ng-src="{{restaurant.yelp.rating_img_url_small}}"></img></p>
+
+                 </div>
+               </div>
+
+               <div flex="50" layout="column">
+                <div flex="32" class="lgAdd">
+                  <p>{{restaurant.restaurantAddress}}</p>
+                </div>
+                <div flex="78" class="lgMap">
+                  <ui-gmap-google-map center='map.center' zoom='11'>
+                    <ui-gmap-marker idKey='1' coords='map.center' options='options'>
+                    </ui-gmap-marker>
+                  </ui-gmap-google-map>
+                </div>
+              </div>
+
             </div>
-          <div class="lgRating">
-            <ul>
-              <li>Food: {{restaurant.foodRating}}</li>
-              <li>Service: {{restaurant.serviceRating}}</li>
-              <li>Ambience: {{restaurant.ambienceRating}}</li>
-              <li>Price per: {{'$' + restaurant.priceRating}}</li>
-              <li>Yelp Rating: <img ng-if="restaurant.yelp" ng-src="{{restaurant.yelp.rating_img_url_small}}"></img></li>
-            </ul>
-          </div>
-          <div class="lgRev">
-            <p>{{restaurant.restaurantReview}}</p>
-            <p>{{restaurant.restaurantAddress}}</p>
+
           </div>
 
-
-        </div>
         </md-grid-tile>
       </md-grid-list>
     </div>
+    <div ui-view></div>
+  </div>
+</div>
 
-    <!-- RESTAURANT RENDER -->
-    <div ng-repeat="restaurant in restaurants | filter:searchRestaurant">
-      <md-content id="start" flex>
-        <div id="container">
-          <div id="content">
-            <div class="row">
-              <div class="col-md-4">
-                <!-- Make sure to use 'ng-src' instead of 'src' in Angular!!!! -->
-                <img id="restphoto" ng-src={{restaurant.image}} alt="">
-                <!-- Uncomment it after integrating with Yelp API
-                <ui-gmap-google-map center='restaurant.center' zoom='11'></ui-gmap-google-map>
-              -->
-              <ui-gmap-google-map center='map.center' zoom='11'>
-                <!-- Add label on it! -->
-                <ui-gmap-marker
-                idKey='1'
-                coords='map.center'
-                options='options'
-                >
-              </ui-gmap-marker>
-            </ui-gmap-google-map>
-          </div>
-          <div class="col-md-8">
-            <h1>{{restaurant.restaurantName}}</h1>
-            <div class="restinfo">
-              <p><strong>{{restaurant.restaurantAddress}}</strong></p>
-              <p>{{restaurant.restaurantReview}}</p>
+
+
+<!--
+  <div flex class="lgImg" layout-padding>
+              <img id="revPhoto" ng-src="{restauran".image}} alt="">
             </div>
-            <h3>Ratings</h3>
-            <div class ="ratinginfo">
-              <ul>
-                <li>Food: {{restaurant.foodRating}}</li>
-                <li>Service: {{restaurant.serviceRating}}</li>
-                <li>Ambience: {{restaurant.ambienceRating}}</li>
-                <li>Price per: {{'$' + restaurant.priceRating}}</li>
-                <li>Yelp Rating: <img ng-if="restaurant.yelp" ng-src="{{restaurant.yelp.rating_img_url_small}}"></img></li>
-              </ul>
+
+<div layout="column">
+              <div flex class="lgRating">
+                <ul>
+                  <li>Food: {{restaurant.foodRating}}</li>
+                  <li>Service: {{restaurant.serviceRating}}</li>
+                  <li>Ambience: {{restaurant.ambienceRating}}</li>
+                  <li>Price per: {{'$' + restaurant.priceRating}}</li>
+                  <li>Yelp Rating: <img ng-if="restaurant.yelp" ng-src="{{restaurant.yelp.rating_img_url_small}}"></img></li>
+                </ul>
+              </div>
+            
+              <div flex class="lgRev">
+                  <h4>{{restaurant.restaurantReview}}</h4>
+                  <p>{{restaurant.restaurantAddress}}</p>
+              </div>
+
+              <div flex class="lgMap">
+                <ui-gmap-google-map center='map.center' zoom='11'>
+                  
+                  <ui-gmap-marker
+                  idKey='1'
+                  coords='map.center'
+                  options='options'>
+                </ui-gmap-marker>
+              </ui-gmap-google-map>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </md-content>
-</div>
-<div ui-view></div>
-</div>
-</div>
+          </div> -->

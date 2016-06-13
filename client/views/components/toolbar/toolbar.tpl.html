@@ -25,15 +25,15 @@
       <!-- PENCIL WRITE REVIEW BUTTON -->
       <md-button
         aria-label="Write Review"
-        style="float:right" 
+        style="float:right;text-align:right" 
         ng-click="openReview()"
         ng-if="toolbar.auth.isAuthenticated"
-        <i class="material-icons" class="name">mode_edit</i></md-icon>
+        <i class="material-icons lgWrite">mode_edit</i></md-icon>
       </md-button>
 
       <md-button
         aria-label="User"
-        style="float:right" 
+        style="float:right; padding-top:6px" 
         ui-sref="user"
         ng-if="toolbar.auth.isAuthenticated"
         <i class="material-icons">person</i>
