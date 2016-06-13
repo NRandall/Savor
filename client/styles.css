@@ -374,3 +374,14 @@ h2 > span {
   font-weight: 700;
   width: 100%;
   text-align: center; }
+
+.result-list {
+  min-height: 30px !important;
+}
+.result-list:hover {
+  background-color: gray;
+}
+.lgClose {
+  float:right;
+  padding: 8px;
+}

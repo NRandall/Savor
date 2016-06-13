@@ -3,8 +3,9 @@ var express = require('express');
 var jwt = require('express-jwt');
 var cors = require('cors');
 var morgan = require('morgan');
-
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 // Set up mongoose
 var mongoose = require('mongoose');
@@ -28,11 +29,24 @@ var authCheck = jwt({
   audience: 'VJw1CCaxKJ4FdkqPamlBxUUrjuGapt8e'
 });
 
+// Socket.io
+io.on('connection', function(socket) {
+
+  // once socket-client emit 'chat msg' event from client, chatHandler function will be invoked
+  socket.on('chat msg', function chatHandler(msg) {
+
+    // server emit 'chat msg' event back to every socket-client
+    io.emit('chat msg', msg);
+  });
+});
+
 // API endpoints
 var handler = require('./handlers/handlers');
 
 // use this route with review submit button
 app.post('/api/restaurants', handler.addRestaurant);
+
+app.post('/api/restaurants/yelp', handler.queryRestaurant);
 
 app.get('/api/private', handler.getRestaurantsByUser);
 
@@ -52,5 +66,5 @@ app.put('/api/restaurants/:id', handler.updateRestaurantInfo);
 
 app.delete('/api/users/:id', handler.deleteRestaurant);
 
-module.exports = app;
-
+// export http variable instead app for socket.io to work properly
+module.exports = http;

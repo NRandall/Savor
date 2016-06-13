@@ -1,4 +1,5 @@
 [![Stories in Ready](https://badge.waffle.io/HRR16-triceratops/Savor.png?label=ready&title=Ready)](https://waffle.io/HRR16-triceratops/Savor)
+[![Stories in Ready](https://badge.waffle.io/HRR16-triceratops/Savor.png?label=ready&title=Ready)](https://waffle.io/HRR16-triceratops/Savor)
 # Savor
 
 > A restaurant recollection application for food and beverage enthusiasts who desire to remember every meal.

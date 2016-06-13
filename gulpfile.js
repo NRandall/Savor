@@ -18,8 +18,8 @@ gulp.task('client-test', function(done) {
 
 gulp.task('server-test', function(done) {
   return gulp.src('./specs/unit/server/ServerSpec.js', {read: false})
-    // gulp-mocha needs filepaths so you can't have any plugins before it
-    .pipe(mocha({reporter: 'nyan'}));
+  // gulp-mocha needs filepaths so you can't have any plugins before it
+  .pipe(mocha({reporter: 'spec'}));
 });
 
 gulp.task('browser-sync', ['nodemon'], function() {
@@ -33,7 +33,9 @@ gulp.task('browser-sync', ['nodemon'], function() {
 // the real stuff
 gulp.task('default', ['browser-sync'], function () {
   gulp.watch('./client/**/*.*', ['bs-delay', 'client-test']);
+  gulp.watch('./specs/unit/client/**/*.*', ['client-test']);
   gulp.watch('./server/**/*.js', ['bs-delay', 'server-test']);
+  gulp.watch('./specs/unit/server/**/*.js', {interval: 5000}, ['server-test']);
 });
 
 // give nodemon time to restart

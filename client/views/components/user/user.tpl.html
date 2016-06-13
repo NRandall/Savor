@@ -26,7 +26,7 @@
       </md-card>
     </div>
         <div class="gridList">
-      <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="500px" md-row-height="500px" md-gutter="8px" md-gutter-gt-sm="4px">
+      <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="3" md-cols-gt="3" md-row-height-gt-md="500px" md-row-height="500px" md-gutter="8px" md-gutter-gt-sm="4px">
         <md-grid-tile ng-repeat="restaurant in restaurants | filter:searchRestaurant" md-rowspan="{{restaurant.span.row}}" md-colspan="{{restaurant.span.col}}" md-colspan-sm="1" md-colspan-xs="1" class="white">
           <md-grid-tile-header class="lgName"><h2 >{{restaurant.restaurantName}}</h2></md-grid-tile-header>
           <div class="lgRevCont" layout="column" layout-fill>
@@ -50,8 +50,8 @@
                   <p>{{restaurant.restaurantAddress}}</p>
                 </div>
                 <div flex="78" class="lgMap">
-                  <ui-gmap-google-map center='map.center' zoom='11'>
-                    <ui-gmap-marker idKey='1' coords='map.center' options='options'>
+                  <ui-gmap-google-map center='restaurant.yelp.location.coordinate' zoom='11'>
+                    <ui-gmap-marker idKey='1' coords='restaurant.yelp.location.coordinate' options='options'>
                     </ui-gmap-marker>
                   </ui-gmap-google-map>
                 </div>

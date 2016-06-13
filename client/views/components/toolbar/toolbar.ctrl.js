@@ -1,15 +1,15 @@
 angular
-    .module('savor.toolbar', [])
-    .controller('toolbarController', ['toolbarFactory', 'ngDialog', '$scope']);
+    .module('savor.toolbar', ['ngMaterial'])
+    .controller('toolbarController', ['toolbarFactory', 'ngDialog', '$scope', '$mdSidenav']);
 
 // CHANGED (not really)
 // they forgot to inject rootScope?
-function toolbarController(auth, store, $location, ngDialog, $scope) {
+function toolbarController(auth, store, $location, ngDialog, $scope, $mdSidenav, $rootScope) {
   var vm = this;
   vm.login = login;
   vm.logout = logout;
   vm.auth = auth;
-    
+
   function login() {
     // The auth service has a signin method that
     // makes use of Auth0Lock. If authentication
@@ -51,5 +51,42 @@ function toolbarController(auth, store, $location, ngDialog, $scope) {
       scope: $scope,
       className: 'ngdialog-theme-default dialogwidth800'
     })
-  }
+  };
+
+  $scope.chatLog = [];
+  $scope.chatMsg = '';
+
+  socket.on('chat msg', function (msg) {
+    $scope.$applyAsync(function () {
+      $scope.chatLog.push(msg);
+    });
+  });
+
+  $scope.keypress = function keypress (e) {
+    if(e.charCode === 13) {
+
+      // username should be set!!!
+      var profile = JSON.parse(localStorage.getItem('profile')) || {};
+      var username = profile.nickname || 'Unknown';
+      socket.emit('chat msg', {username: username, msg: $scope.chatMsg});
+      $scope.chatMsg = '';
+      console.log($scope.chatLog);
+    }
+  };
+
+  $scope.openChat = function openChat () {
+    $mdSidenav('right')
+      .open()
+      .then(function () {
+        console.debug("toggle is done");
+      });
+  };
+
+  $scope.closeChat = function closeChat () {
+    $mdSidenav('right')
+      .close()
+      .then(function () {
+        console.debug("toggle is done");
+      });
+  };
 }

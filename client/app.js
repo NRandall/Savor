@@ -19,8 +19,8 @@ angular
   .config(function($provide, authProvider, $urlRouterProvider, $stateProvider, $httpProvider, jwtInterceptorProvider, uiGmapGoogleMapApiProvider) {
 
     authProvider.init({
-      domain: 'savor.auth0.com',
-      clientID: 'VJw1CCaxKJ4FdkqPamlBxUUrjuGapt8e'
+      domain: 'savor-it.auth0.com',
+      clientID: '9GEIyOmo6sWg0W912IKhAb3UF2mA37kr'
     });
 
     $urlRouterProvider.otherwise('/');
@@ -85,37 +85,37 @@ angular
     // $httpProvider.interceptors.push('redirect');
   })
 
-    // The callback in $locationChangeStart gets evaluated
-    // every time the page is refreshed, or when a new URL
-    // is reached. Inside the callback we are looking for
-    // a saved JWT, and if there is one, we check whether
-    // it is expired. If the JWT isn’t expired, we set the
-    // user’s auth state with their profile and token. If
-    // the JWT is expired, we redirect to the home route.
-    .run(function($rootScope, $state, auth, store, jwtHelper, $location) {
-      $rootScope.$on('$locationChangeStart', function(e, toState) {
+  // The callback in $locationChangeStart gets evaluated
+  // every time the page is refreshed, or when a new URL
+  // is reached. Inside the callback we are looking for
+  // a saved JWT, and if there is one, we check whether
+  // it is expired. If the JWT isn’t expired, we set the
+  // user’s auth state with their profile and token. If
+  // the JWT is expired, we redirect to the home route.
+  .run(function($rootScope, $state, auth, store, jwtHelper, $location) {
+    $rootScope.$on('$locationChangeStart', function(e, toState) {
 
-        // // CHANGED (only sets)
-        // if (toState.url === '/test'){
-        //   $rootScope.toStateUrl = toState.url; 
-        // }
+      // // CHANGED (only sets)
+      // if (toState.url === '/test'){
+      //   $rootScope.toStateUrl = toState.url;
+      // }
 
-        // Get the JWT that is saved in local storage
-        // and if it is there, check whether it is expired.
-        // If it isn't, set the user's auth state
-        var token = store.get('token');
-        if (token) {
-          if (!jwtHelper.isTokenExpired(token)) {
-            if (!auth.isAuthenticated) {
-              auth.authenticate(store.get('profile'), token);
-            }
+      // Get the JWT that is saved in local storage
+      // and if it is there, check whether it is expired.
+      // If it isn't, set the user's auth state
+      var token = store.get('token');
+      if (token) {
+        if (!jwtHelper.isTokenExpired(token)) {
+          if (!auth.isAuthenticated) {
+            auth.authenticate(store.get('profile'), token);
           }
-        } else {
-          // Otherwise, redirect to the home route
-          $location.path('/');
         }
-      });
-    })
+      } else {
+        // Otherwise, redirect to the home route
+        $location.path('/');
+      }
+    });
+  })
 
   .controller('savorCtrl',['$scope', '$http', '$location', '$stateParams', function savorCtrl($scope, $http, $location, $stateParams) {
     //none of the functions below are being used...
@@ -147,3 +147,6 @@ angular
     }
 
   }]);
+
+// initialize socket.io-client
+var socket = io();

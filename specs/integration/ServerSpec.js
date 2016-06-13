@@ -1,13 +1,15 @@
 var expect = require('chai').expect;
 var request = require('request');
+var Yelp = require('yelp');
 
+var config = require('../../server/config.js');
 var app = require('../../index.js');
 var Restaurant = require('../../server/db/models.js');
-var port = process.env.PORT || 4000;
+var port = process.env.PORT || 3000;
 
 describe('/restaurants', function () {
-  
-  var idOfItem; 
+
+  var idOfItem;
 
   var GETall = {
     'method': 'GET',
@@ -28,7 +30,15 @@ describe('/restaurants', function () {
       'ambienceRating': 8,
       'restaurantReview': 'String',
       'userEmail': 'cara@bernsteinchernoff.com',
-      'image': 'http://s3-media1.fl.yelpcdn.com/bphoto/YiLAieTSO18oPjEuRzZSQA/348s.jpg'
+      'image': 'http://s3-media1.fl.yelpcdn.com/bphoto/YiLAieTSO18oPjEuRzZSQA/348s.jpg',
+      'yelp': {
+        'location': {
+          'coordinate': {
+            'longitude': 0,
+            'latitude': 51
+          }
+        }
+      }
     }
   };
 
@@ -54,7 +64,15 @@ describe('/restaurants', function () {
         ambienceRating: 10,
         restaurantReview: "Best buttermilk-dutch-oven fried chicken on the planet.",
         userEmail: 'bc@gmail.com',
-        image: "http://s3-media1.fl.yelpcdn.com/bphoto/YiLAieTSO18oPjEuRzZSQA/348s.jpg"
+        image: "http://s3-media1.fl.yelpcdn.com/bphoto/YiLAieTSO18oPjEuRzZSQA/348s.jpg",
+        'yelp': {
+          'location': {
+            'coordinate': {
+              'longitude': 0,
+              'latitude': 51
+            }
+          }
+        }
       }).save().then(function(saved){
         idOfItem = saved._id;
         console.log("idOfItem: ",idOfItem);
@@ -117,8 +135,16 @@ describe('/restaurants', function () {
         'ambienceRating': 8,
         'restaurantReview': 'the wonderful, the amazing, the wonderful review!',
         'userEmail': 'cara@bernsteinchernoff.com',
-        'image': 'http://s3-media1.fl.yelpcdn.com/bphoto/YiLAieTSO18oPjEuRzZSQA/348s.jpg'
-      }  
+        'image': 'http://s3-media1.fl.yelpcdn.com/bphoto/YiLAieTSO18oPjEuRzZSQA/348s.jpg',
+        'yelp': {
+          'location': {
+            'coordinate': {
+              'longitude': 0,
+              'latitude': 51
+            }
+          }
+        }
+      }
     };
     request(UPDATEone, function (err, res) {
       if(err) return done(err);
@@ -129,3 +155,34 @@ describe('/restaurants', function () {
   });
 
 });
+
+describe('yelp API', function() {
+  var yelpConfig = config.api.yelp;
+  var yelp = new Yelp({
+      consumer_key: yelpConfig.consumer_key,
+      consumer_secret: yelpConfig.consumer_secret,
+      token: yelpConfig.token,
+      token_secret: yelpConfig.token_secret,
+  });
+
+  var options = {
+    'method': 'POST',
+    'followAllRedirects': true,
+    'uri': 'http://localhost:' + port + '/api/restaurants/yelp',
+    'json': {
+      'name': 'Pizza',
+      'address': 'San Francisco'
+    }
+  };
+
+  it('should return 10 yelp search result', function(done) {
+    request(options, function (err, res) {
+      if(err) return done(err);
+      expect(res.statusCode).to.equal(200);
+      expect(res.body).to.be.a('array');
+      expect(res.body.length).to.equal(5);
+      done();
+    });
+  });
+
+})

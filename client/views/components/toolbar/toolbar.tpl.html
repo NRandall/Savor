@@ -1,52 +1,85 @@
-
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <div class="toolbar">
   <md-toolbar>
-    <div class="md-toolbar-tools themer">
-      <img 
-        class= "logo" 
-        ui-sref="/"
-        src="/views/components/toolbar/SAVOR4XWHITEXBLACK2.png"
-        ng-click="toolbar.goHome()"
-      >
-      <span flex></span>
-      
-      <!-- LOGIN BUTTON -->
-      <md-button
-        aria-label="Login"
-        ui-sref="toolbar"
-        ng-if="!toolbar.auth.isAuthenticated"
-        ng-click="toolbar.login()">
-        Login
-      </md-button>
+  <div class="md-toolbar-tools themer">
+    <img
+      class= "logo"
+      ui-sref="/"
+      src="/views/components/toolbar/SAVOR4XWHITEXBLACK.png"
+      ng-click="toolbar.goHome()"
+    >
+    <span flex></span>
 
-      <!-- PENCIL WRITE REVIEW BUTTON -->
-      <md-button
-        aria-label="Write Review"
-        style="float:right;text-align:right" 
-        ng-click="openReview()"
-        ng-if="toolbar.auth.isAuthenticated"
-        <i class="material-icons lgWrite">mode_edit</i></md-icon>
-      </md-button>
+    <!-- LOGIN BUTTON -->
+    <md-button
+      aria-label="Login"
+      ui-sref="toolbar"
+      ng-if="!toolbar.auth.isAuthenticated"
+      ng-click="toolbar.login()">
+      Login
+    </md-button>
 
-      <md-button
-        aria-label="User"
-        style="float:right; padding-top:6px" 
-        ui-sref="user"
-        ng-if="toolbar.auth.isAuthenticated"
-        <i class="material-icons">person</i>
-      </md-button>
+    <!-- PENCIL WRITE REVIEW BUTTON -->
+    <md-button
+      aria-label="Write Review"
+      style="float:right;text-align:right;min-width:30px"
+      ng-click="openReview()"
+      ng-if="toolbar.auth.isAuthenticated"
+      <i class="material-icons lgWrite">mode_edit</i></md-icon>
+    </md-button>
 
-      <!-- LOGOUT BUTTON -->
-      <md-button
-        aria-label="Logout"
-        ui-sref="toolbar"
-        ng-if="toolbar.auth.isAuthenticated"
-        ng-click="toolbar.logout()">
-        Logout
-      </md-button>     
-    </div>
+    <md-button
+      aria-label="Chat"
+      style="float:right"
+      ng-click="openChat()">
+      Chat
+    </md-button>
+
+    <md-button
+      aria-label="User"
+      style="float:right; padding-top:6px; min-width:30px"
+      ui-sref="user"
+      ng-if="toolbar.auth.isAuthenticated"
+      <i class="material-icons">person</i>
+    </md-button>
+
+    <!-- LOGOUT BUTTON -->
+    <md-button
+      aria-label="Logout"
+      ui-sref="toolbar"
+      ng-if="toolbar.auth.isAuthenticated"
+      ng-click="toolbar.logout()">
+      Logout
+    </md-button>
+
+  </div>
   </md-toolbar>
+
+  <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+    <md-toolbar class="md-theme-light">
+    <i ng-click="closeChat()" class="material-icons lgClose">close</i>
+
+    </md-toolbar>
+    <md-content layout-padding>
+      <md-list class="md-dense" flex>
+        <md-list-item class="md-3-line result-list" ng-repeat="item in chatLog">
+          <div class="md-list-item-text" layout="column">
+            <h4>{{ item.username + ' : ' + item.msg}}</h4>
+          </div>
+        </md-list-item>
+      </md-list>
+      <form>
+        <md-input-container>
+          <label for="testInput">Chat here...</label>
+          <input type="text" id="testInput"
+                 ng-model="chatMsg" md-autofocus ng-keypress="keypress($event)" autocomplete="off">
+        </md-input-container>
+      </form>
+      <md-button ng-click="closeChat()" class="md-primary">
+        Close Chat
+      </md-button>
+    </md-content>
+  </md-sidenav>
 </div>

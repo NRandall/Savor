@@ -1,6 +1,8 @@
 var Restaurant = require('./models');
 var _ = require('underscore');
 var express = require('express');
+var Yelp = require('yelp');
+var config = require(__dirname + '/../config.js');
 
 module.exports = {
   //function not being used...
@@ -11,9 +13,9 @@ module.exports = {
       } else {
         callback(restaurant);
       }
-    })
+    });
   },
-  
+
   fetchAll: function(callback) {
     Restaurant.find(function(err,restaurants) {
       if(err) {
@@ -42,7 +44,7 @@ module.exports = {
       } else {
         callback(newEntry);
       }
-    })
+    });
   },
   //function not being used...
   updateOne: function(id, newProperties, callback) {
@@ -70,5 +72,22 @@ module.exports = {
         });
       }
     });
+  },
+  queryRestaurant: function(data, callback) {
+    var yelpConfig = config.api.yelp;
+    var yelp = new Yelp({
+        consumer_key: yelpConfig.consumer_key,
+        consumer_secret: yelpConfig.consumer_secret,
+        token: yelpConfig.token,
+        token_secret: yelpConfig.token_secret,
+    });
+    yelp.search({ term: data.name, location: data.address, limit: 5 })
+      .then(function(data) {
+        var results = data.businesses;
+        callback(results);
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
   }
 };

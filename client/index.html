@@ -9,8 +9,14 @@
   <!-- Auth0's lock widget library -->
   <script type="text/javascript" src="https://cdn.auth0.com/js/lock-7.12.min.js"></script>
 
+  <!-- OAuth Signature -->
+  <script src="bower_components/oauth-signature/dist/oauth-signature.js"></script>
+
   <!-- Lodash for Angular-Google-Maps -->
   <script src="bower_components/lodash/dist/lodash.min.js"></script>
+
+  <!-- Socket.io -->
+  <script src="bower_components/socket.io-client/socket.io.js"></script>
 
   <!-- AngularJS -->
   <script src="bower_components/angular/angular.js"></script>
@@ -70,12 +76,11 @@
   <script src="/views/components/home/home.dir.js"></script>
   <script src="/views/components/home/home.ctrl.js"></script>
   <script src="bower_components/ng-dialog/js/ngDialog.js"></script>
-  <script src="bower_components/underscore/underscore.js"></script>
 
 </head>
 
 <body>
-<div class='lgContent' ng-app="savor" ng-controller="savorCtrl">
+  <div class='lgContent' ng-app="savor" ng-controller="savorCtrl">
     <toolbar></toolbar>
     <list></list>
     <span class="containerbackground"> </span>

@@ -1,5 +1,12 @@
 language: node_js
 node_js:
-  - "5"
+- '5'
 services:
-  - mongodb
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: lNzeHNYr8icCQ3h/N7L9Hi18pC+AoUNNVPYhaBwT6KkWogEiCxj8NfHH+13W8M1UwDC8afkLK/yC41m5iODhmmKmYmOFhRMiE3xX2HyYIx1DrTRazInQisGLN9Qe97qbbYkijG7Jf3IXHLtG3i+P+IEgFGOcmhBE1nwVo6zUKeTYX7SC8BWzfy+g5LQMulAJpGSUSIdnbIbuLfbtJDlvrkGM6ebnWtLDdZ79L+WFMyg+5lHH1feEqjkYmkSklZhNig+vzyFu+l7PpeZcZF69Yr1nN8snJ07UbHugp8HJJNzCnFzcVUbWxw3h9X6HD49pjRVRQzEygWdst27fPjl1dvko2UH/ZNL8rKfo28wc6izqbDvqGNgSDyoQfOTwpCiyxa6MN/xq3VTQk6sfRCWZnUv+u5MMiw22gWItWFZsN+DdJ95lqGLizsijcZeLOGvUtlAv/fFCgpFykZDoLPS+N5TrbgSPj9mLFmeF+BWC0ktkuA5CYKkdE4yiLdSgbhGIL67H7at6106I1QqCxJt4deOaHtJ9SQefy9TWBcGxWMoM378GdzYnmV6Cf79ufb60BZ1Nu76+9oXyxB8MCCD/gnmBhM5nSDmGTH+fN3sCLOEwRX1ciRlxX/Yt5+VEmgTQ7sFdCgIHkMH2GLC/XqunxAPz5CADRRnlc/xXIRyfeE0=
+  app:
+    master: savor-it-staging
+    production: savor-it

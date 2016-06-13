@@ -1,17 +1,45 @@
 
 <div ng-controller="reviewController" layout="column" layout-padding="" ng-cloak="">
-
+  <form name="review">
   <md-content class="md-no-momentum">
+    <div ng-show="!isSelected">
+      <md-input-container class="md-icon-float md-block">
+        <md-icon><i class="material-icons" class="name">restaurant</i></md-icon>
+        <input ng-model="restaurant.name" ng-change="queryYelp()" type="text" placeholder="Restaurant">
+      </md-input-container>
 
-    <md-input-container class="md-icon-float md-block">
-      <md-icon><i class="material-icons" class="name">restaurant</i></md-icon>
-      <input ng-model="restaurant.name" type="text" placeholder="Restaurant">
+      <md-input-container class="md-icon-float md-block">
+        <md-icon><i class="material-icons" class="name">home</i></md-icon>
+        <input ng-model="restaurant.address" ng-change="queryYelp()" type="text" placeholder="Address">
+      </md-input-container>
+  </div>
+
+    <md-input-container class="md-icon-float md-block" ng-show="false">
+        <input ng-model="selectedOne.name" type="text" placeholder="Restaurant" required>
     </md-input-container>
 
-    <md-input-container class="md-icon-float md-block">
-      <md-icon><i class="material-icons" class="name">home</i></md-icon>
-      <input ng-model="restaurant.address" type="text" placeholder="Address">
+    <md-input-container class="md-icon-float md-block" ng-show="false">
+        <input ng-model="selectedOne.address" type="text" placeholder="Address" required>
     </md-input-container>
+
+    <md-list class="md-dense" flex ng-show="isSelected">
+      <md-subheader class="md-no-sticky">Selected Restaurant</md-subheader>
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ selectedOne.name }}</h3>
+          <h4>{{ selectedOne.address }}</h4>
+          <h4>{{ yelp.snippet_text }}</h4>
+        </div>
+    </md-list>
+
+    <md-list class="md-dense" flex ng-show="isFetched">
+      <md-subheader class="md-no-sticky">Search Result - Select One</md-subheader>
+      <md-list-item class="md-3-line result-list" ng-repeat="item in restaurants" ng-click="selectOne(item)">
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ item.name }}</h3>
+          <h4>{{ item.location.display_address[0] + ' ' + item.location.display_address[2]}}</h4>
+        </div>
+      </md-list-item>
+    </md-list>
 
   </md-content>
 
@@ -19,30 +47,35 @@
   <div layout="row">
     <md-input-container flex>
     <md-icon><i class="material-icons" class="name">spa</i></md-icon>
-      <input ng-model="ambience" type="text" placeholder="Ambience">
+      <input ng-model="ambience" type="text" placeholder="Ambience" required>
     </md-input-container>
 
     <md-input-container flex>
     <md-icon><i class="material-icons" class="name">local_pizza</i></md-icon>
-      <input ng-model="food" type="text" placeholder="Food">
+      <input ng-model="food" type="text" placeholder="Food" required>
     </md-input-container>
 
     <md-input-container flex>
     <md-icon><i class="material-icons" class="name">room_service</i></md-icon>
-      <input ng-model="service" type="text" placeholder="Service">
+      <input ng-model="service" type="text" placeholder="Service" required>
     </md-input-container>
 
     <md-input-container flex>
     <md-icon><i class="material-icons" class="name">attach_money</i></md-icon>
-      <input ng-model="price" type="text" placeholder="Price">
+      <input ng-model="price" type="text" placeholder="Price" required>
     </md-input-container>
   </div>
 
   <md-input-container md-no-float='' class="md-block">
     <span>{{200 - restaurant.review.length}} Characters remaining</span>
     <md-icon><i class="material-icons" class="name">chat</i></md-icon>
-    <input ng-model="restaurant.review" ng-trim="false" maxlength="200" type="text" placeholder="200 Characters"><br><br>
+    <input ng-model="restaurant.review" ng-trim="false" maxlength="200" type="text" placeholder="200 Characters" required><br><br>
     <p ng-show="photoUploaded">{{picName}} uploaded!</p>
+  </md-input-container>
+
+  <!-- Input for checking pic upload -->
+  <md-input-container class="md-icon-float md-block" ng-show="false">
+      <input ng-model="picName" type="text" placeholder="picName" required>
   </md-input-container>
 
   <div layout="row">
@@ -52,6 +85,7 @@
     <!-- UPLOAD PIC BUTTON -->
     <md-button class="md-buton md-raised md-primary" ng-click="add()">UPLOAD PHOTO</md-button>
     <!-- SUBMIT BUTTON -->
-    <md-button class="md-warn md-raised md-hue-2" ng-click="sendPost()">SUBMIT!</md-button>
+    <md-button class="md-warn md-raised md-hue-2" ng-disabled="!!review.$error.required" ng-click="sendPost()">SUBMIT!</md-button>
   </div>
+  </form>
 </div>
