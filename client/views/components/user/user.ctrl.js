@@ -6,8 +6,16 @@ underscore.factory('_', function() {
 });
 
 angular
-  .module('savor.user',['ngMaterial', 'ngMessages', 'material.svgAssetsCache', 'underscore'])
-  .controller('userController', function($scope, $http, _) {
+  .module('savor.user',['ngMaterial', 'ngMessages', 'material.svgAssetsCache', 'underscore', 'uiGmapgoogle-maps'])
+  .controller('userController', function($scope, $http, _, uiGmapGoogleMapApi) {
+
+    $scope.map = {
+      center: {
+        latitude: 45,
+        longitude: -73
+      },
+      zoom: 8
+    };
 
     $scope.profile = JSON.parse(localStorage.getItem('profile'));
 
@@ -24,7 +32,10 @@ angular
         });
       });
     }
-    getAll();
+    // Make sure to wait till Google Maps SDK is fully ready
+    uiGmapGoogleMapApi.then(function(maps) {
+      getAll();
+    });
   })
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();

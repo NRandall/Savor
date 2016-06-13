@@ -1,65 +1,64 @@
+  <div class="user">
+    <div class="">
+      <md-card class="" md-theme="{{'default'}}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <div class="userInfo">
+              <span class="md-headline">{{profile.nickname}}</span>
+              <span class="md-subhead">{{restaurants.length}} Restaurants Visited</span>
+            </div>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-lg card-media">
+              <img ng-src="{{ profile.picture }}">
+            </div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="column" layout-align="end center">
 
-<div class="user">
-  <div class="col-md-12">
-    <md-card class="col-md-4" md-theme="{{'default'}}" md-theme-watch>
-      <md-card-title>
-        <md-card-title-text>
-          <div class="userInfo">
-            <span class="md-headline">{{profile.nickname}}</span>
-            <span class="md-subhead">{{restaurants.length}} Restaurants Visited</span>
-          </div>
-        </md-card-title-text>
-        <md-card-title-media>
-          <div class="md-media-lg card-media">
-            <img ng-src="{{ profile.picture }}">
-          </div>
-        </md-card-title-media>
-      </md-card-title>
-      <md-card-actions layout="column" layout-align="end center">
+          <md-button>Follow+</md-button>
+          <md-input-container class="md-icon-float md-block" flex>
+            <md-icon><i class="material-icons searchIcon"></i>search</md-icon>
+            <input ng-model="searchRestaurant" type="text" placeholder="Search...">
+          </md-input-container>
 
-        <md-button>Follow+</md-button>
-        <md-input-container class="md-icon-float md-block" flex>
-          <md-icon><i class="material-icons searchIcon"></i>search</md-icon>
-          <input ng-model="searchRestaurant" type="text" placeholder="Search...">
-        </md-input-container>
-
-      </md-card-actions>
-    </md-card>
-  </div>
-
-  <!-- RESTAURANT RENDER -->
-  <div class="col-md-6 lgReview" ng-repeat="restaurant in restaurants | filter:searchRestaurant">
-    <md-content class="md-padding" layout-xs="column" layout="row">
-      <div flex-xs flex-gt-xs="100" layout="column">
-        <md-card md-theme="{{'dark-blue'}}" md-theme-watch>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">{{restaurant.restaurantName}}</span>
-              <span class="md-subhead">{{restaurant.userEmail}}</span>
-              <p>{{restaurant.restaurantReview}}</p>
-              <div class ="">
-                  <ul>
-                    <li>Food: {{restaurant.foodRating}}</li>
-                    <li>Service: {{restaurant.serviceRating}}</li>
-                    <li>Ambience: {{restaurant.ambienceRating}}</li>
-                    <li>Price per: {{'$' + restaurant.priceRating}}</li>
-                     <li>Yelp Rating: <img ng-if="restaurant.yelp" ng-src="{{restaurant.yelp.rating_img_url_small}}"></img></li>
-                  </ul>
+        </md-card-actions>
+      </md-card>
+    </div>
+        <div class="gridList">
+      <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="500px" md-row-height="500px" md-gutter="8px" md-gutter-gt-sm="4px">
+        <md-grid-tile ng-repeat="restaurant in restaurants | filter:searchRestaurant" md-rowspan="{{restaurant.span.row}}" md-colspan="{{restaurant.span.col}}" md-colspan-sm="1" md-colspan-xs="1" class="white">
+          <md-grid-tile-header class="lgName"><h2 >{{restaurant.restaurantName}}</h2></md-grid-tile-header>
+          <div class="lgRevCont" layout="column" layout-fill>
+          <div flex="45" class="lgImg">
+              <span class="helper"></span><img id="revPhoto" ng-src="{{restaurant.image}}" alt="">
+            </div>  
+            <div flex="55" class= lgLower layout="row">
+              <div flex="50" class="lgRev" >
+                <p>{{restaurant.restaurantReview}}</p>
+                <hr>
+                <div class="lgRating">
+                  <p>Food: {{restaurant.foodRating}}<br />
+                   Service: {{restaurant.serviceRating}}<br />
+                   Ambience: {{restaurant.ambienceRating}}<br />
+                   Price per: {{'$' + restaurant.priceRating}}<br />
+                   Yelp Rating: <img ng-if="restaurant.yelp" ng-src="{{restaurant.yelp.rating_img_url_small}}"></img></p>
+                 </div>
+               </div>
+               <div flex="50" layout="column">
+                <div flex="32" class="lgAdd">
+                  <p>{{restaurant.restaurantAddress}}</p>
                 </div>
-            </md-card-title-text>
-            <md-card-title-media>
-              <div class="md-media-md card-media">
-                <img id="" ng-src={{restaurant.image}} alt="">
+                <div flex="78" class="lgMap">
+                  <ui-gmap-google-map center='map.center' zoom='11'>
+                    <ui-gmap-marker idKey='1' coords='map.center' options='options'>
+                    </ui-gmap-marker>
+                  </ui-gmap-google-map>
+                </div>
               </div>
-
-            </md-card-title-media>
-          </md-card-title>
-          <md-card-actions layout="row" layout-align="end center">
-            <md-button>More Info</md-button>
-          </md-card-actions>
-        </md-card>
-      </div>
-    </md-content>
+            </div>
+          </div>
+        </md-grid-tile>
+      </md-grid-list>
+    </div>
   </div>
-</div>
-</div>
